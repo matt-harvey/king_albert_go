@@ -1,0 +1,8 @@
+alberto
+**/.*.swp
+.ackrc
+vendor/
+.env
+**/*~
+notes_unversioned.md
+scratch*

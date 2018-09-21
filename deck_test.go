@@ -47,11 +47,7 @@ func TestDeckDeal(t *testing.T) {
 	if len(deck.cards) != 0 {
 		t.Fatalf("Expected no cards to be left in deck, but %d cards were left", len(deck.cards))
 	}
-	card, dealt := deck.Deal()
-	expectedCard := Card{Rank(1), Spades}
-	if card != expectedCard {
-		t.Fatalf("Expected %s, but got %s", expectedCard, card)
-	}
+	_, dealt := deck.Deal()
 	if dealt {
 		t.Fatal("Expected card not to be dealt from empty deck, but one was dealt")
 	}

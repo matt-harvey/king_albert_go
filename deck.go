@@ -32,11 +32,11 @@ func (d *Deck) Shuffle() {
 // Deal deals one card from the deck, returning that card and true,
 // and reducing the number of cards remaining in the deck by 1; unless
 // the deck does not contain any cards, in which case the number of
-// cards in the deck remains zero and the Ace of Spades and false are
+// cards in the deck remains zero and an undefined card and false are
 // returned.
 func (d *Deck) Deal() (Card, bool) {
 	if len(d.cards) == 0 {
-		return Card{Rank(1), Spades}, false
+		return Card{}, false
 	}
 	lim := len(d.cards) - 1
 	card := d.cards[lim]

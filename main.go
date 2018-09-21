@@ -22,10 +22,31 @@ func getRune(scanner *bufio.Scanner, prompt string) (c rune) {
 	return c
 }
 
-func main() {
-	scanner := bufio.NewScanner(os.Stdin)
+func getMovementComponent(scanner *bufio.Scanner, prompt string, min rune, max rune) rune {
 	for {
-		char := getRune(scanner, "Enter a character: ")
-		fmt.Printf("You entered: %c\n", char)
+		r := getRune(scanner, prompt)
+		if r >= min && r <= max {
+			return r
+		}
+		fmt.Printf("You must enter a letter from %c to %c\n", min, max)
 	}
+}
+
+func main() {
+	board := NewBoard()
+	clearScreen := "\x1b[2J\x1b[1;1H"
+	fmt.Print("%s\n%s\n", clearScreen, board)
+	scanner := bufio.NewScanner(os.Stdin)
+	for board.VictoryState() != Won {
+		origin := getMovementComponent(scanner, "Enter position to move FROM (labelled e-t): ", 'e', 't')
+		destination := getMovementComponent(scanner, "\nEnter position to move TO (labelled a-m): ", 'a', 'm')
+		movement := Movement{origin, destination}
+		if board.Permits(movement) {
+			board.Execute(movement)
+			fmt.Print("%s\n%s\n", clearScreen, board)
+		} else {
+			fmt.Println("That move is not permitted, try again!")
+		}
+	}
+	fmt.Printf("%s\n%s\nYou won! Hooray!\n", clearScreen, board)
 }

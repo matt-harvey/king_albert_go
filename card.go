@@ -6,8 +6,10 @@ import "fmt"
 
 type Rank int
 
+const MaxRank = Rank(13)
+
 func WalkRanks(f func(rank Rank)) {
-	for i := 1; i <= 13; i++ {
+	for i := Rank(1); i <= MaxRank; i++ {
 		f(Rank(i))
 	}
 }
@@ -30,7 +32,9 @@ const (
 	Hearts
 	Diamonds
 	Clubs
+	LimitSuit
 )
+const NumSuits = int(LimitSuit)
 
 func WalkSuits(f func(Suit)) {
 	for s := Spades; s <= Clubs; s++ {

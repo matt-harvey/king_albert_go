@@ -37,8 +37,13 @@ func main() {
 	clearScreen := "\x1b[2J\x1b[1;1H"
 	fmt.Print("%s\n%s\n", clearScreen, board)
 	scanner := bufio.NewScanner(os.Stdin)
-	for board.VictoryState() != Won {
-		fmt.Printf("There are %d permitted movements.\n\n", board.NumPermittedMovements())
+	for board.VictoryState() == Ongoing {
+		numMovements := board.NumLegalMovements()
+		if numMovements == 1 {
+			fmt.Print("There is 1 legal move.\n")
+		} else {
+			fmt.Printf("There are %d legal moves.\n\n", board.NumLegalMovements())
+		}
 		origin := getMovementComponent(
 			scanner,
 			"Enter position to move FROM (labelled e-t): ",
@@ -57,5 +62,10 @@ func main() {
 			fmt.Println("That move is not permitted, try again!")
 		}
 	}
-	fmt.Printf("%s\n%s\nYou won! Hooray!\n", clearScreen, board)
+	switch board.VictoryState() {
+	case Won:
+		fmt.Printf("%s\n%s\nYou won! Hooray!\n", clearScreen, board)
+	case Lost:
+		fmt.Printf("%s\n%s\nThere are no legal moves left. You lost :(\n", clearScreen, board)
+	}
 }

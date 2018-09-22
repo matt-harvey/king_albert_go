@@ -102,6 +102,9 @@ func (b *Board) LocationAt(label rune) Location {
 }
 
 func (b *Board) VictoryState() VictoryState {
+	if b.NumLegalMovements() == 0 {
+		return Lost
+	}
 	for _, foundation := range b.foundations {
 		card, ok := foundation.ActiveCard()
 		if !ok || (card.Rank != MaxRank) {
@@ -136,7 +139,7 @@ func (b *Board) maxColumnSize() int {
 	return max
 }
 
-func (b *Board) WalkPermittedMovements(f func(movement Movement)) {
+func (b *Board) WalkLegalMovements(f func(movement Movement)) {
 	for origin := MinMovementOrigin; origin <= MaxMovementOrigin; origin++ {
 		for destination := MinMovementDestination; destination <= MaxMovementDestination; destination++ {
 			movement := Movement{origin, destination}
@@ -147,9 +150,9 @@ func (b *Board) WalkPermittedMovements(f func(movement Movement)) {
 	}
 }
 
-func (b *Board) NumPermittedMovements() int {
+func (b *Board) NumLegalMovements() int {
 	result := 0
-	b.WalkPermittedMovements(func(movement Movement) { result++ })
+	b.WalkLegalMovements(func(movement Movement) { result++ })
 	return result
 }
 

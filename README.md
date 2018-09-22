@@ -6,9 +6,13 @@ This is a command-line implementation of the single-player card game
 It essentially a port of [King Albert](https://github.com/matt-harvey/king_albert)
 from Rust to Go.
 
-## How to build and play
+## Installation
 
-TODO
+WIP
+
+## How to play
+
+WIP
 
 ## License
 

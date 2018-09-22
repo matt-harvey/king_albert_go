@@ -102,13 +102,13 @@ func (b *Board) LocationAt(label rune) Location {
 }
 
 func (b *Board) VictoryState() VictoryState {
-	if b.NumLegalMovements() == 0 {
-		return Lost
+	if b.NumLegalMovements() != 0 {
+		return Ongoing
 	}
 	for _, foundation := range b.foundations {
 		card, ok := foundation.ActiveCard()
 		if !ok || (card.Rank != MaxRank) {
-			return Ongoing
+			return Lost
 		}
 	}
 	return Won

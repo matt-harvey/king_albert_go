@@ -32,9 +32,9 @@ const (
 	Clubs
 )
 
-func WalkSuits(f func(suit Suit)) {
-	for i := int(Spades); i <= int(Clubs); i++ {
-		f(Suit(i))
+func WalkSuits(f func(Suit)) {
+	for s := Spades; s <= Clubs; s++ {
+		f(s)
 	}
 }
 

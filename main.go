@@ -35,7 +35,7 @@ func getMovementComponent(scanner *bufio.Scanner, prompt string, min rune, max r
 func main() {
 	board := NewBoard()
 	clearScreen := "\x1b[2J\x1b[1;1H"
-	fmt.Print("%s\n%s\n", clearScreen, board)
+	fmt.Printf("%s\n%s\n", clearScreen, board)
 	scanner := bufio.NewScanner(os.Stdin)
 	for board.VictoryState() == Ongoing {
 		numMovements := board.NumLegalMovements()
@@ -57,7 +57,7 @@ func main() {
 		movement := Movement{origin, destination}
 		if board.Permits(movement) {
 			board.Execute(movement)
-			fmt.Print("%s\n%s\n", clearScreen, board)
+			fmt.Printf("%s\n%s\n", clearScreen, board)
 		} else {
 			fmt.Println("That move is not permitted, try again!")
 		}

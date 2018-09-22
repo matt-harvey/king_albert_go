@@ -18,18 +18,6 @@ func TestDeckShuffle(t *testing.T) {
 	}
 }
 
-func TestDeckWalk(t *testing.T) {
-	deck := NewDeck()
-	var cards []Card
-	deck.Walk(func(card Card) {
-		cards = append(cards, card)
-	})
-	numCards := len(cards)
-	if numCards != 52 {
-		t.Fatalf("walked %d cards in deck, but expected %d", numCards, 52)
-	}
-}
-
 func TestDeckDeal(t *testing.T) {
 	deck := NewDeck()
 	numCards := len(deck.cards)

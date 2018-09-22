@@ -7,15 +7,7 @@ import (
 	"unicode/utf8"
 )
 
-func checkError(err error) {
-	if err != nil {
-		fmt.Fprint(os.Stderr, err.Error())
-		os.Exit(1)
-	}
-}
-
-func getRune(prompt string) (c rune) {
-	scanner := bufio.NewScanner(os.Stdin)
+func getRune(scanner *bufio.Scanner, prompt string) (c rune) {
 	fmt.Printf(prompt)
 	for scanner.Scan() {
 		input := scanner.Bytes()
@@ -31,8 +23,9 @@ func getRune(prompt string) (c rune) {
 }
 
 func main() {
+	scanner := bufio.NewScanner(os.Stdin)
 	for {
-		char := getRune("Enter a character: ")
+		char := getRune(scanner, "Enter a character: ")
 		fmt.Printf("You entered: %c\n", char)
 	}
 }

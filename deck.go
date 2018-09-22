@@ -29,12 +29,6 @@ func (d *Deck) Shuffle() {
 	})
 }
 
-func (d *Deck) Walk(f func(card Card)) {
-	for _, card := range d.cards {
-		f(card)
-	}
-}
-
 // Deal deals one card from the deck, returning that card and true,
 // and reducing the number of cards remaining in the deck by 1; unless
 // the deck does not contain any cards, in which case the number of

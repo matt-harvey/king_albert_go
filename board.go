@@ -8,6 +8,11 @@ import (
 const numColumns = 9
 const handSize = 7
 
+const MinMovementOrigin = 'e'
+const MaxMovementOrigin = 't'
+const MinMovementDestination = 'a'
+const MaxMovementDestination = 'm'
+
 type Board struct {
 	foundations [NumSuits]Foundation
 	columns     [numColumns]Column
@@ -129,6 +134,23 @@ func (b *Board) maxColumnSize() int {
 		}
 	}
 	return max
+}
+
+func (b *Board) WalkPermittedMovements(f func(movement Movement)) {
+	for origin := MinMovementOrigin; origin <= MaxMovementOrigin; origin++ {
+		for destination := MinMovementDestination; destination <= MaxMovementDestination; destination++ {
+			movement := Movement{origin, destination}
+			if b.Permits(movement) {
+				f(movement)
+			}
+		}
+	}
+}
+
+func (b *Board) NumPermittedMovements() int {
+	result := 0
+	b.WalkPermittedMovements(func(movement Movement) { result++ })
+	return result
 }
 
 func (b *Board) String() string {

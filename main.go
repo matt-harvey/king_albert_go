@@ -38,8 +38,17 @@ func main() {
 	fmt.Print("%s\n%s\n", clearScreen, board)
 	scanner := bufio.NewScanner(os.Stdin)
 	for board.VictoryState() != Won {
-		origin := getMovementComponent(scanner, "Enter position to move FROM (labelled e-t): ", 'e', 't')
-		destination := getMovementComponent(scanner, "\nEnter position to move TO (labelled a-m): ", 'a', 'm')
+		fmt.Printf("There are %d permitted movements.\n\n", board.NumPermittedMovements())
+		origin := getMovementComponent(
+			scanner,
+			"Enter position to move FROM (labelled e-t): ",
+			MinMovementOrigin,
+			MaxMovementOrigin)
+		destination := getMovementComponent(
+			scanner,
+			"\nEnter position to move TO (labelled a-m): ",
+			MinMovementDestination,
+			MaxMovementDestination)
 		movement := Movement{origin, destination}
 		if board.Permits(movement) {
 			board.Execute(movement)

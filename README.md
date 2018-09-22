@@ -8,11 +8,22 @@ from Rust to Go.
 
 ## Installation
 
-WIP
+You must have [Go](https://golang.org) installed. Run:
+
+```
+go get -u github.com/matt-harvey/alberto
+```
 
 ## How to play
 
-WIP
+Enter `alberto` to start playing.
+
+The rules of King Albert patience may be found <a
+href="https://en.wikipedia.org/wiki/King_Albert_(solitaire)">here</a>.
+
+You've won when the only cards you can see are kings.
+
+King Albert patience is often not winnable. Just CTRL-C to give up and try again :)
 
 ## License
 

@@ -3,7 +3,7 @@
 This is a command-line implementation of the single-player card game
 <a href="https://en.wikipedia.org/wiki/King_Albert_(solitaire)">King Albert</a>.
 
-It essentially a port of [King Albert](https://github.com/matt-harvey/king_albert)
+It essentially a port of [King Albert](https://github.com/matt-harvey/king-albert)
 from Rust to Go.
 
 ## Installation

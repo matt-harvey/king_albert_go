@@ -87,7 +87,7 @@ func WalkCards(f func(card Card)) {
 	})
 }
 
-// Card.String outputs a string representation of the Card, showing its rank and
+// Card.String returns a string representation of the Card, showing its rank and
 // suit, with padding to the left as required to make it three characters
 // wide.
 func (c Card) String() string {

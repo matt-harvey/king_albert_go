@@ -14,6 +14,8 @@ You must have [Go](https://golang.org) installed. Run:
 go get -u github.com/matt-harvey/alberto
 ```
 
+Note ``swx`` has been tested on Mac OSX and Linux, but not on Windows.
+
 ## How to play
 
 Enter `alberto` to start playing.

@@ -2,7 +2,9 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"unicode/utf8"
 )
@@ -32,8 +34,47 @@ func getMovementComponent(scanner *bufio.Scanner, prompt string, min rune, max r
 	}
 }
 
+func loadGame() (*Board, error) {
+	board := &Board{}
+	// FIXME file name should be configurable
+	jsonBytes, err := ioutil.ReadFile(".alberto")
+	if err != nil {
+		return nil, err
+	}
+	if len(jsonBytes) == 0 {
+		// Actually check if file exists
+		return nil, nil
+	}
+	err = json.Unmarshal(jsonBytes, board)
+	if err != nil {
+		return nil, err
+	}
+	return board, nil
+}
+
+func saveGame(board *Board) error {
+	jsonBytes, err := json.MarshalIndent(board, "", "  ")
+	if err != nil {
+		return err
+	}
+	file, err := os.Create(".alberto") // FIXME file name should be configurable
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	_, err = file.Write(jsonBytes)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func main() {
-	board := NewBoard()
+	board, _ := loadGame()
+	// FIXME Shouldn't just ignore error; distinguish genuine error from "file doesn't exist yet" error.
+	if board == nil {
+		board = NewBoard()
+	}
 	clearScreen := "\x1b[2J\x1b[1;1H"
 	fmt.Printf("%s\n%s\n", clearScreen, board)
 	scanner := bufio.NewScanner(os.Stdin)
@@ -57,6 +98,10 @@ func main() {
 		movement := Movement{origin, destination}
 		if board.Permits(movement) {
 			board.Execute(movement)
+			err := saveGame(board)
+			if err != nil {
+				panic(err)
+			}
 			fmt.Printf("%s\n%s\n", clearScreen, board)
 		} else {
 			fmt.Println("That move is not permitted, try again!")

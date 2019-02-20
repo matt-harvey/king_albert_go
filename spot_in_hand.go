@@ -1,13 +1,13 @@
 package main
 
 type SpotInHand struct {
-	card    Card
-	hasCard bool
+	Card    Card `json:"card"`
+	HasCard bool `json:"has_card"`
 }
 
 func (s SpotInHand) String() string {
-	if s.hasCard {
-		return s.card.String()
+	if s.HasCard {
+		return s.Card.String()
 	}
 	return "   "
 }
@@ -17,25 +17,25 @@ func (s *SpotInHand) CanReceive(card Card) bool {
 }
 
 func (s *SpotInHand) Receive(card Card) {
-	s.card = card
-	s.hasCard = true
+	s.Card = card
+	s.HasCard = true
 }
 
 func (s *SpotInHand) CanGiveCard() bool {
-	return s.hasCard
+	return s.HasCard
 }
 
 func (s *SpotInHand) GiveCard() Card {
-	if !s.hasCard {
+	if !s.HasCard {
 		panic("SpotInHand does not contain a card")
 	}
-	s.hasCard = false
-	return s.card
+	s.HasCard = false
+	return s.Card
 }
 
 func (s *SpotInHand) ActiveCard() (Card, bool) {
-	if s.hasCard {
-		return s.card, true
+	if s.HasCard {
+		return s.Card, true
 	}
 	return Card{}, false
 }

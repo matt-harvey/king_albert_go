@@ -5,8 +5,8 @@ import (
 	"strings"
 )
 
-const numColumns = 9
-const handSize = 7
+const NumColumns = 9
+const HandSize = 7
 
 const MinMovementOrigin = 'e'
 const MaxMovementOrigin = 't'
@@ -14,9 +14,9 @@ const MinMovementDestination = 'a'
 const MaxMovementDestination = 'm'
 
 type Board struct {
-	foundations [NumSuits]Foundation
-	columns     [numColumns]Column
-	hand        [handSize]SpotInHand
+	Foundations [NumSuits]Foundation `json:"foundations"`
+	Success     [NumColumns]Column   `json:"columns"`
+	Hand        [HandSize]SpotInHand `json:"hand"`
 }
 
 func NewBoard() *Board {
@@ -28,27 +28,27 @@ func NewBoard() *Board {
 	{
 		suitIndex := 0
 		WalkSuits(func(suit Suit) {
-			board.foundations[suitIndex] = Foundation{suit, nil}
+			board.Foundations[suitIndex] = Foundation{suit, nil}
 			suitIndex++
 		})
 	}
 
-	for i := 0; i != numColumns; i++ {
+	for i := 0; i != NumColumns; i++ {
 		for j := 1; j != i+2; j++ {
 			card, dealt := deck.Deal()
 			if !dealt {
 				panic("Card not dealt when expected during board initialization")
 			}
-			board.columns[i].Receive(card)
+			board.Success[i].Receive(card)
 		}
 	}
 
-	for i := 0; i != handSize; i++ {
+	for i := 0; i != HandSize; i++ {
 		card, dealt := deck.Deal()
 		if !dealt {
 			panic("Card not dealt when expected during board initialization")
 		}
-		board.hand[i].Receive(card)
+		board.Hand[i].Receive(card)
 	}
 
 	return &board
@@ -57,45 +57,45 @@ func NewBoard() *Board {
 func (b *Board) LocationAt(label rune) Location {
 	switch label {
 	case 'a':
-		return &b.foundations[0]
+		return &b.Foundations[0]
 	case 'b':
-		return &b.foundations[1]
+		return &b.Foundations[1]
 	case 'c':
-		return &b.foundations[2]
+		return &b.Foundations[2]
 	case 'd':
-		return &b.foundations[3]
+		return &b.Foundations[3]
 	case 'e':
-		return &b.columns[0]
+		return &b.Success[0]
 	case 'f':
-		return &b.columns[1]
+		return &b.Success[1]
 	case 'g':
-		return &b.columns[2]
+		return &b.Success[2]
 	case 'h':
-		return &b.columns[3]
+		return &b.Success[3]
 	case 'i':
-		return &b.columns[4]
+		return &b.Success[4]
 	case 'j':
-		return &b.columns[5]
+		return &b.Success[5]
 	case 'k':
-		return &b.columns[6]
+		return &b.Success[6]
 	case 'l':
-		return &b.columns[7]
+		return &b.Success[7]
 	case 'm':
-		return &b.columns[8]
+		return &b.Success[8]
 	case 'n':
-		return &b.hand[0]
+		return &b.Hand[0]
 	case 'o':
-		return &b.hand[1]
+		return &b.Hand[1]
 	case 'p':
-		return &b.hand[2]
+		return &b.Hand[2]
 	case 'q':
-		return &b.hand[3]
+		return &b.Hand[3]
 	case 'r':
-		return &b.hand[4]
+		return &b.Hand[4]
 	case 's':
-		return &b.hand[5]
+		return &b.Hand[5]
 	case 't':
-		return &b.hand[6]
+		return &b.Hand[6]
 	default:
 		panic(fmt.Errorf("No board location labelled %c", label))
 	}
@@ -105,7 +105,7 @@ func (b *Board) VictoryState() VictoryState {
 	if b.NumLegalMovements() != 0 {
 		return Ongoing
 	}
-	for _, foundation := range b.foundations {
+	for _, foundation := range b.Foundations {
 		card, ok := foundation.ActiveCard()
 		if !ok || (card.Rank != MaxRank) {
 			return Lost
@@ -131,7 +131,7 @@ func (b *Board) Execute(movement Movement) {
 
 func (b *Board) maxColumnSize() int {
 	max := 0
-	for _, column := range b.columns {
+	for _, column := range b.Success {
 		if len(column) > max {
 			max = len(column)
 		}
@@ -157,7 +157,7 @@ func (b *Board) NumLegalMovements() int {
 }
 
 func (b *Board) String() string {
-	fds := b.foundations
+	fds := b.Foundations
 	var bld strings.Builder
 	fmt.Fprintf(&bld, "                           a    b    c    d\n")
 	fmt.Fprintf(&bld, "____________________________________________\n")
@@ -165,7 +165,7 @@ func (b *Board) String() string {
 	fmt.Fprintf(&bld, "  e    f    g    h    i    j    k    l    m\n")
 	fmt.Fprintf(&bld, "____________________________________________\n")
 	for i := 0; i != b.maxColumnSize(); i++ {
-		for j, column := range b.columns {
+		for j, column := range b.Success {
 			if j != 0 {
 				fmt.Fprintf(&bld, "  ")
 			}
@@ -177,7 +177,7 @@ func (b *Board) String() string {
 	fmt.Fprintf(&bld, "  n    o    p    q    r    s    t\n")
 	fmt.Fprintf(&bld, "____________________________________________\n")
 	fmt.Fprintf(&bld, " ")
-	for k, spotInHand := range b.hand {
+	for k, spotInHand := range b.Hand {
 		if k != 0 {
 			fmt.Fprintf(&bld, "  ")
 		}

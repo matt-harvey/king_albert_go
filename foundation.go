@@ -3,24 +3,24 @@ package main
 import "fmt"
 
 type Foundation struct {
-	suit  Suit
-	cards []Card
+	Suit  Suit   `json:"suit"`
+	Cards []Card `json:"cards"`
 }
 
 func (f Foundation) String() string {
 	activeCard, ok := f.ActiveCard()
 	if !ok {
-		return fmt.Sprintf("  %s", f.suit)
+		return fmt.Sprintf("  %s", f.Suit)
 	}
 	return activeCard.String()
 }
 
 func (f *Foundation) CanReceive(card Card) bool {
-	return (card.Suit == f.suit) && (card.Rank == f.nextRank())
+	return (card.Suit == f.Suit) && (card.Rank == f.nextRank())
 }
 
 func (f *Foundation) Receive(card Card) {
-	f.cards = append(f.cards, card)
+	f.Cards = append(f.Cards, card)
 }
 
 func (f *Foundation) CanGiveCard() bool {
@@ -32,10 +32,10 @@ func (f *Foundation) GiveCard() Card {
 }
 
 func (f *Foundation) ActiveCard() (Card, bool) {
-	if len(f.cards) == 0 {
+	if len(f.Cards) == 0 {
 		return Card{}, false
 	}
-	return f.cards[len(f.cards)-1], true
+	return f.Cards[len(f.Cards)-1], true
 }
 
 func (f *Foundation) nextRank() Rank {

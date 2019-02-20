@@ -75,8 +75,8 @@ func (s Suit) Color() Color {
 // Card
 
 type Card struct {
-	Rank
-	Suit
+	Rank `json:"rank"`
+	Suit `json:"suit"`
 }
 
 func WalkCards(f func(card Card)) {

@@ -1,4 +1,4 @@
-# Alberto
+# king\_albert\_go
 
 This is a command-line implementation of the single-player card game
 <a href="https://en.wikipedia.org/wiki/King_Albert_(solitaire)">King Albert</a>.
@@ -11,14 +11,14 @@ from Rust to Go.
 You must have [Go](https://golang.org) installed. Run:
 
 ```
-go get -u github.com/matt-harvey/alberto
+go get -u github.com/matt-harvey/king_albert_go
 ```
 
 Note ``swx`` has been tested on Mac OSX and Linux, but not on Windows.
 
 ## How to play
 
-Enter `alberto` to start playing.
+Enter `king_albert_go` to start playing.
 
 The rules of King Albert patience may be found <a
 href="https://en.wikipedia.org/wiki/King_Albert_(solitaire)">here</a>.

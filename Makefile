@@ -1,5 +1,5 @@
 # Environment variable default values.
-BINARY_NAME=alberto
+BINARY_NAME=king_albert_go
 
 # Default target.
 .PHONY: all

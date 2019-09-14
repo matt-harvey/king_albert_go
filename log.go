@@ -5,4 +5,4 @@ import (
 	"os"
 )
 
-var Log *log.Logger = log.New(os.Stdout, "alberto ", log.Lshortfile|log.LstdFlags)
+var Log *log.Logger = log.New(os.Stdout, "king_albert_go ", log.Lshortfile|log.LstdFlags)

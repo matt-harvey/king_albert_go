@@ -14,7 +14,7 @@ You must have [Go](https://golang.org) installed. Run:
 go get -u github.com/matt-harvey/king_albert_go
 ```
 
-Note ``swx`` has been tested on Mac OSX and Linux, but not on Windows.
+Note `king_albert_go` has been tested on Mac OSX and Linux, but not on Windows.
 
 ## How to play
 
